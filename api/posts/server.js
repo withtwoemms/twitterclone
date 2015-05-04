@@ -27,6 +27,10 @@ app.get('/api/posts', function(request,response) {
   })
 })
 
+app.get('/', function(req, res) {
+  res.sendfile('layouts/posts.html') //path relative to this file (server.js)
+})
+
 /************
  * POST STUB
  ***********

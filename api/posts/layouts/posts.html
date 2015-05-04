@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Twitter Clone</title>
+    <!--link rel="stylesheet" href="layouts/bootstrap.css"-->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!--script src="/api/posts/layouts/angular.js"></script-->
+    <script src="https://code.angularjs.org/1.4.0-rc.1/angular.min.js"></script>
+  </head>
+  <body ng-app="app">
+    <div ng-controller="NameCtrl" class="container">
+
+      <h1>Recent Posts</h1>
+
+      <form role="form">
+        <div class="form-group">
+
+          <div class="input-group">
+            <input ng-model="postBody" class="form-control"/>
+            <span class="input-group-btn">
+              <button ng-click="addPost()" class="btn btn-default">Add Post</button>
+            </span>
+          </div>
+
+        </div>
+      </form>
+      
+      <ul class="list-group">
+        <li ng-repeat="post in posts" class="list-group-item">
+          <strong>{{ post.username }}</strong>
+          <span>{{ post.body }}</span>
+        </li>
+      </ul>
+
+    </div>
+
+    <script>
+      var app = angular.module('app', [])
+
+      app.controller('NameCtrl', function($scope, $http) {
+
+        /* STUBBED posts
+        $scope.posts = [
+          {
+            username: "withtwoemms",
+            body: "I'm at the coffee shop."
+          },
+          {
+            username: "chemphys_e",
+            body: "that spectroscopy tho.."
+          }
+          ]
+        */
+
+        $http.get('http://localhost:3000/api/posts').success(function(posts) {
+          $scope.posts = posts
+        }).error(function(err) {
+          $scope.posts = err
+        })
+
+        $scope.addPost = function() {
+          if ($scope.postBody) {
+            $scope.posts.unshift({
+              username: 'withtwoemms',
+              body: $scope.postBody
+            })
+            $scope.postBody = null
+          }
+        }
+
+      })
+    </script>
+
+  </body>
+</html>
