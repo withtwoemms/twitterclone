@@ -36,8 +36,9 @@
     <script>
       var app = angular.module('app', [])
 
-      app.controller('NameCtrl', function($scope) {
+      app.controller('NameCtrl', function($scope, $http) {
 
+        /* STUBBED POSTS
         $scope.posts = [
           {
             username: "withtwoemms",
@@ -47,7 +48,14 @@
             username: "chemphys_e",
             body: "that spectroscopy tho.."
           }
-        ]
+          ]
+        */
+
+        $http.get('localhost:3000/api/posts').success(function(posts) {
+          $scope.posts = posts
+        }).error(function(err) {
+          $scope.posts = err
+        })
 
         $scope.addPost = function() {
           if ($scope.postBody) {
