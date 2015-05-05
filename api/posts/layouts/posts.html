@@ -27,7 +27,7 @@
       </form>
       
       <ul class="list-group">
-        <li ng-repeat="post in posts" class="list-group-item">
+        <li ng-repeat="post in posts | orderBy:'-date'" class="list-group-item">
           <strong>{{ post.username }}</strong>
           <span>{{ post.body }}</span>
         </li>
@@ -35,58 +35,7 @@
 
     </div>
 
-    <script>
-      var app = angular.module('app', [])
-
-      app.controller('NameCtrl', function($scope, $http) {
-
-        /* STUBBED posts
-        $scope.posts = [
-          {
-            username: "withtwoemms",
-            body: "I'm at the coffee shop."
-          },
-          {
-            username: "chemphys_e",
-            body: "that spectroscopy tho.."
-          }
-          ]
-        */
-      
-        //promise
-        $http.get('http://localhost:3000/api/posts').success(function(posts) {
-          $scope.posts = posts
-        }).error(function(err) {
-          $scope.posts = err
-        })
-
-        /* POST STUB -- in browser
-        $scope.addPost = function() {
-          if ($scope.postBody) {
-            $scope.posts.unshift({
-              username: 'withtwoemms',
-              body: $scope.postBody
-            })
-            $scope.postBody = null
-          }
-        }
-        */
-
-        //promise
-        $scope.addPost = function() {
-          if ($scope.postBody) {
-            $http.post('/api/posts', {
-              username: 'withtwoemms',
-              body: $scope.postBody
-            }).success(function() {
-              $scope.posts.unshift(post)
-              $scope.postBody = null
-            })
-          }
-        }
-
-      })
-    </script>
+    <script src="/app.js"></script>
 
   </body>
 </html>
