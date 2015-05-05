@@ -4,6 +4,7 @@ var Post = require('./models/post')
     
 var app = express()
 app.use(bodyParser.json())
+require('./controllers/api/posts')(app) // passes app to anonymous function containing endpoints @posts.js
 
 /***********
  * GET STUB
@@ -20,12 +21,16 @@ app.get('/api/posts', function(request, response) {
 */
 
 // NoSQL DB QUERY -- where `Post` is the model in a MongoDB store
+/*
 app.get('/api/posts', function(request,response) {
-  Post.find(function(err, posts) {
+  Post.find()
+  .sort('-date')
+  .exec(function(err, posts) {
     if (err) {return next(err) }
     response.json(posts)
   })
 })
+*/
 
 app.get('/', function(req, res) {
   res.sendfile('layouts/posts.html') //path relative to this file (server.js)
@@ -41,7 +46,7 @@ app.post('/api/posts', function(request, response) {
   response.send(201)
 })
 */
-
+/*
 app.post('/api/posts', function(request, response) {
   var post = new Post({
     username: request.body.username,
@@ -52,7 +57,7 @@ app.post('/api/posts', function(request, response) {
     response.json(201, post)
   })
 })
-
+*/
 
 // TEST POST with the following:
 //  > in a new db, an empty array is returned
