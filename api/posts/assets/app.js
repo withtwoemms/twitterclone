@@ -1,9 +1,16 @@
 var app = angular.module('app', [])
 
-app.controller('NameCtrl', function($scope, $http) {
+//services allow for separate instances of global objects such as $http
+app.service('PostsSvc', function($http) {
+  this.fetch = function() {
+    return $http.get('/api/posts')
+  }
+}) 
+
+app.controller('PostCtrl', function($scope, PostsSvc) {
 
   //promise
-  $http.get('http://localhost:3000/api/posts').success(function(posts) {
+  PostsSvc.fetch().success(function(posts) {
     $scope.posts = posts
   }).error(function(err) {
     $scope.posts = err
