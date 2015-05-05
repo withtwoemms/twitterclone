@@ -1,9 +1,19 @@
 var app = angular.module('app', [])
 
-app.controller('NameCtrl', function($scope, $http) {
+//services allow for separate instances of global objects such as $http
+app.service('PostsSvc', function($http) {
+  this.fetch = function() {
+    return $http.get('/api/posts')
+  }
+  this.create = function(post) {
+    return $http.post('/api/posts', post)
+  }
+}) 
+
+app.controller('PostCtrl', function($scope, PostsSvc) {
 
   //promise
-  $http.get('http://localhost:3000/api/posts').success(function(posts) {
+  PostsSvc.fetch().success(function(posts) {
     $scope.posts = posts
   }).error(function(err) {
     $scope.posts = err
@@ -12,7 +22,7 @@ app.controller('NameCtrl', function($scope, $http) {
   //promise
   $scope.addPost = function() {
     if ($scope.postBody) {
-      $http.post('/api/posts', {
+      PostsSvc.create({
         username: 'withtwoemms',
         body: $scope.postBody
       }).success(function() {
