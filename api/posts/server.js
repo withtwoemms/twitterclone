@@ -4,7 +4,8 @@ var Post = require('./models/post')
     
 var app = express()
 app.use(bodyParser.json())
-require('./controllers/api/posts')(app) // passes app to anonymous function containing endpoints @posts.js
+app.use('/api/posts', require('./controllers/api/posts'))
+//require('./controllers/api/posts')(app) // passes app to anonymous function containing endpoints @posts.js
 
 /***********
  * GET STUB
